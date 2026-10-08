@@ -187,6 +187,10 @@ textarea.input { resize: vertical; font-size: 0.9rem; line-height: 1.45; backgro
 .format-size { font-size: 0.75rem; color: var(--text-secondary); }
 .format:has(input:checked) { background: var(--yellow); }
 .format:has(input:checked) .format-size { color: var(--ink); }
+.format-note {
+  margin: 12px 0 0; padding: 8px 12px; font-size: 0.875rem; font-weight: 500;
+  color: var(--violet-deep); background: var(--lilac); border-radius: 12px;
+}
 
 /* Focus clavier visible sur les radios masqués */
 .chip:has(input:focus-visible), .swatch:has(input:focus-visible), .format:has(input:focus-visible) {

@@ -21,7 +21,7 @@
     zoomRow: $('zoom-row'), zoom: $('zoom'), zoomIn: $('zoom-in'), zoomOut: $('zoom-out'),
     remove: $('photo-remove'), photoError: $('photo-error'),
     name: $('name'), nameError: $('name-error'), nameCount: $('name-count'), role: $('role'), roleCount: $('role-count'),
-    groupType: $('group-type'), groupLang: $('group-lang'), groupFrame: $('group-frame'), groupFormat: $('group-format'),
+    groupType: $('group-type'), groupLang: $('group-lang'), groupFrame: $('group-frame'), groupFormat: $('group-format'), formatNote: $('format-note'),
     download: $('download'), share: $('share'), needName: $('need-name'),
     caption: $('caption'), copy: $('copy'), status: $('status'), uiLang: $('ui-lang')
   };
@@ -53,6 +53,7 @@
     updateCounters();
     updateCanvasLabel();
     updateHint();
+    updateFormatNote();
   }
 
   function each(selector, fn) {
@@ -153,6 +154,7 @@
     C.render.resize(el.canvas, format);
     var inner = C.render.photoInner(format);
     C.photo.setViewport(inner.w, inner.h);
+    updateFormatNote();
     requestRender();
   }
 
@@ -171,6 +173,11 @@
     el.canvas.setAttribute('aria-label', state.name
       ? t('canvasAltFor', { name: state.name, type: type })
       : t('canvasAlt'));
+  }
+
+  // Petite note d'usage sous le choix du format (ex. : 4:5 → idéal pour LinkedIn)
+  function updateFormatNote() {
+    el.formatNote.textContent = t('formatNote' + state.format.charAt(0).toUpperCase() + state.format.slice(1));
   }
 
   function updateCaption() { el.caption.value = C.CAPTIONS[state.lang]; }
@@ -446,8 +453,10 @@
       var code = e.target.getAttribute && e.target.getAttribute('data-ui-lang');
       if (!code) return;
       state.uiLang = code;
+      state.lang = code; // la card suit la langue du site (modifiable ensuite au champ 5)
       buildGroups();
       applyUiText();
+      changed();
     });
   }
 
