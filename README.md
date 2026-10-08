@@ -18,20 +18,6 @@ assets/logo-cits.png   logo officiel (utilisé en priorité)
 assets/logo-cits.svg   repère de repli, affiché seulement si le PNG est introuvable
 ```
 
-## Lancer en local
-
-Les polices viennent de Google Fonts : une connexion internet est nécessaire au premier chargement. Ouvrez le site avec un serveur local, depuis la racine du projet :
-
-```bash
-npx serve .
-# ou
-python -m http.server 8000
-```
-
-Puis ouvrez l'adresse affichée (par exemple http://localhost:8000).
-
-Double-cliquer sur `index.html` (adresse `file://`) fonctionne aussi : le navigateur interdit alors d'exporter un canvas contenant une image chargée depuis un fichier, donc le logo est lu dans `js/logo-inline.js` (copie en data URI). Un serveur reste recommandé.
-
 ## Remplacer le logo
 
 Remplacez `assets/logo-cits.png` par le fichier officiel (fond transparent, texte clair : la card est sur fond violet). Il est ajusté automatiquement dans la zone de 270×96 px, en haut à gauche. L'en-tête de la page (`index.html`) référence aussi `assets/logo-cits.png`.
@@ -48,17 +34,17 @@ Pour utiliser un autre nom ou un SVG, modifiez `EVENT.logoSources` dans `js/conf
 
 Tout est dans `js/config.js` :
 
-| À changer | Objet |
-| --- | --- |
-| Couleurs de la charte, couleurs de cadre | `PALETTE`, `FRAME_COLORS` |
-| Couleurs de badge par type de participation | `TYPES` |
-| Date, lieu, titre, libellés des pastilles, bouton (FR/EN) | `CARD_TEXT` |
-| Légendes à copier | `CAPTIONS` |
-| URL des billets, chiffres 50+ et 90+, hashtag | `EVENT` |
-| Positions, tailles, rotations de chaque format | `LAYOUT.post`, `LAYOUT.story`, `LAYOUT.square` |
-| Contours, trame de points, dégradé, étoiles, curseur | `STYLE` |
-| Limites (28/40 caractères, poids max, zoom) | `LIMITS` |
-| Textes de l'interface (FR/EN) | `UI` |
+| À changer                                                 | Objet                                          |
+| --------------------------------------------------------- | ---------------------------------------------- |
+| Couleurs de la charte, couleurs de cadre                  | `PALETTE`, `FRAME_COLORS`                      |
+| Couleurs de badge par type de participation               | `TYPES`                                        |
+| Date, lieu, titre, libellés des pastilles, bouton (FR/EN) | `CARD_TEXT`                                    |
+| Légendes à copier                                         | `CAPTIONS`                                     |
+| URL des billets, chiffres 50+ et 90+, hashtag             | `EVENT`                                        |
+| Positions, tailles, rotations de chaque format            | `LAYOUT.post`, `LAYOUT.story`, `LAYOUT.square` |
+| Contours, trame de points, dégradé, étoiles, curseur      | `STYLE`                                        |
+| Limites (28/40 caractères, poids max, zoom)               | `LIMITS`                                       |
+| Textes de l'interface (FR/EN)                             | `UI`                                           |
 
 Les couleurs de `PALETTE` sont recopiées dans les variables CSS au démarrage (`syncPalette` dans `app.js`) : `config.js` fait foi. Les valeurs déclarées dans `css/styles.css` ne servent que de secours avant l'exécution du script, gardez-les alignées.
 
