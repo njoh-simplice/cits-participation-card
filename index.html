@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Générateur de card de participation · CITS26</title>
+  <meta name="description" content="Créez et téléchargez votre card « Je serai au CITS26 » pour le Cameroon International Tech Summit, 15-17 octobre 2026, Yaoundé.">
+  <meta name="theme-color" content="#360050">
+  <link rel="icon" href="assets/logo-cits.png">
+
+  <!-- Polices : Raleway 800 (titres) et DM Sans 400/500/700 (texte) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Raleway:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#card-form" data-i18n="skip">Aller au formulaire</a>
+
+  <header class="site-header">
+    <div class="wrap header-bar">
+      <img class="brand" src="assets/logo-cits.png" alt="Cameroon International Tech Summit" width="200" height="77">
+      <div class="ui-lang" role="group" id="ui-lang" aria-label="Langue de l’interface">
+        <button type="button" data-ui-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-ui-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <div class="wrap hero">
+      <h1 data-i18n="title">Générez votre card de participation</h1>
+      <p data-i18n="subtitle">Importez votre photo, voyez la card se mettre à jour en direct, puis téléchargez-la en PNG pour la partager.</p>
+    </div>
+  </header>
+
+  <noscript><p class="wrap noscript">Ce générateur nécessite JavaScript. / This generator requires JavaScript.</p></noscript>
+
+  <main class="wrap layout">
+    <!-- Aperçu : le canvas est à la résolution d'export, réduit en CSS -->
+    <section class="preview-col" aria-labelledby="preview-title">
+      <h2 id="preview-title" class="sr-only" data-i18n="previewTitle">Aperçu de votre card</h2>
+      <div class="preview-box">
+        <canvas id="card-canvas" width="1080" height="1350" role="img"
+                aria-label="Aperçu de votre card de participation au CITS26"
+                aria-describedby="drag-hint"></canvas>
+        <p id="loading" class="loading" data-i18n="loading">Chargement des polices…</p>
+      </div>
+      <p id="drag-hint" class="hint" data-i18n="dragHint">Glissez la photo dans le cadre pour la recadrer.</p>
+    </section>
+
+    <form id="card-form" class="form-col" novalidate>
+      <!-- 1. Photo -->
+      <fieldset class="field" id="field-photo">
+        <legend><span class="num" aria-hidden="true">1</span><span data-i18n="f1Label">Photo</span></legend>
+        <p class="help" data-i18n="f1Help">JPG, PNG ou WebP. Recadrage par glisser et zoom, aperçu en direct.</p>
+        <div class="row">
+          <div class="file-pick">
+            <input class="file-input" type="file" id="photo-input" accept="image/jpeg,image/png,image/webp">
+            <label for="photo-input" class="btn btn-primary" id="photo-label" data-i18n="chooseBtn">Choisir une photo</label>
+          </div>
+          <!-- Sur mobile : ouvre directement l'appareil photo frontal -->
+          <div class="file-pick file-pick-camera">
+            <input class="file-input" type="file" id="camera-input" accept="image/jpeg,image/png,image/webp" capture="user">
+            <label for="camera-input" class="btn btn-secondary" data-i18n="cameraBtn">Prendre un selfie</label>
+          </div>
+        </div>
+        <div class="zoom-row" id="zoom-row">
+          <button type="button" class="btn btn-icon" id="zoom-out" data-i18n-aria="zoomOut" aria-label="Dézoomer">−</button>
+          <input type="range" id="zoom" aria-label="Zoom de la photo" data-i18n-aria="zoomLabel">
+          <button type="button" class="btn btn-icon" id="zoom-in" data-i18n-aria="zoomIn" aria-label="Zoomer">+</button>
+        </div>
+        <button type="button" class="btn btn-link" id="photo-remove" data-i18n="removeBtn" hidden>Retirer la photo</button>
+        <p class="privacy" data-i18n="privacy">Votre photo reste sur votre appareil : elle n’est ni envoyée, ni enregistrée.</p>
+        <p class="error" id="photo-error" role="alert"></p>
+      </fieldset>
+
+      <!-- 2. Prénom et nom -->
+      <div class="field">
+        <label for="name"><span class="num" aria-hidden="true">2</span><span data-i18n="f2Label">Prénom et nom</span></label>
+        <input type="text" id="name" class="input" autocomplete="name" maxlength="28" data-i18n-placeholder="f2Placeholder" aria-describedby="name-count name-error">
+        <p class="counter" id="name-count"></p>
+        <p class="error" id="name-error" role="alert"></p>
+      </div>
+
+      <!-- 3. Rôle · Organisation -->
+      <div class="field">
+        <label for="role"><span class="num" aria-hidden="true">3</span><span data-i18n="f3Label">Rôle · Organisation</span> <span class="optional" data-i18n="f3Optional">(facultatif)</span></label>
+        <input type="text" id="role" class="input" autocomplete="organization-title" maxlength="40" data-i18n-placeholder="f3Placeholder" aria-describedby="role-count">
+        <p class="counter" id="role-count"></p>
+      </div>
+
+      <!-- 4. Type de participation (généré par app.js depuis config.js) -->
+      <fieldset class="field">
+        <legend><span class="num" aria-hidden="true">4</span><span data-i18n="f4Label">Type de participation</span></legend>
+        <div class="chips" id="group-type"></div>
+      </fieldset>
+
+      <!-- 5. Langue de la card -->
+      <fieldset class="field">
+        <legend><span class="num" aria-hidden="true">5</span><span data-i18n="f5Label">Langue de la card</span></legend>
+        <div class="chips" id="group-lang"></div>
+      </fieldset>
+
+      <!-- 6. Couleur du cadre -->
+      <fieldset class="field">
+        <legend><span class="num" aria-hidden="true">6</span><span data-i18n="f6Label">Couleur du cadre</span></legend>
+        <div class="swatches" id="group-frame"></div>
+      </fieldset>
+
+      <!-- 7. Format d'export -->
+      <fieldset class="field">
+        <legend><span class="num" aria-hidden="true">7</span><span data-i18n="f7Label">Format d’export</span></legend>
+        <div class="formats" id="group-format"></div>
+      </fieldset>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button type="button" class="btn btn-primary btn-large" id="download" disabled aria-describedby="need-name" data-i18n="download">Télécharger ma card</button>
+        <button type="button" class="btn btn-secondary btn-large" id="share" hidden data-i18n="share">Partager</button>
+      </div>
+      <p class="help" id="need-name" data-i18n="needName">Saisissez votre prénom et nom pour activer le téléchargement.</p>
+
+      <!-- Légende prête à poster -->
+      <div class="field caption-box">
+        <label for="caption" data-i18n="captionLabel">Légende prête à poster</label>
+        <textarea id="caption" class="input" rows="5" readonly></textarea>
+        <button type="button" class="btn btn-secondary" id="copy" data-i18n="copyCaption">Copier la légende</button>
+      </div>
+
+      <!-- Messages d'état annoncés aux lecteurs d'écran (Copié, téléchargement, erreurs) -->
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <footer class="site-footer"><div class="wrap" data-i18n="footer"></div></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/logo-inline.js"></script>
+  <script src="js/photo.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

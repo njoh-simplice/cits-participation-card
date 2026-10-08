@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER de repli : utilisé uniquement si assets/logo-cits.png est introuvable.
+     Ce n'est pas le logo officiel. Remplacez le fichier PNG (ou ce SVG) par le logo fourni. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="270" height="96" viewBox="0 0 270 96">
+  <rect x="1.5" y="1.5" width="267" height="93" rx="22" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="8 6" opacity="0.85"/>
+  <text x="135" y="40" fill="#FFFFFF" font-family="Arial, sans-serif" font-weight="700" font-size="19" text-anchor="middle">Logo officiel</text>
+  <text x="135" y="62" fill="#FFFFFF" font-family="Arial, sans-serif" font-weight="700" font-size="19" text-anchor="middle">Cameroon International Tech</text>
+  <text x="135" y="84" fill="#FFFFFF" font-family="Arial, sans-serif" font-weight="700" font-size="19" text-anchor="middle">Summit</text>
+</svg>
