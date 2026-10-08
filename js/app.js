@@ -451,8 +451,20 @@
     });
   }
 
+  // Crédit en pied de page : « Built by » + lien vers le portfolio (données dans config.js)
+  function buildCredit() {
+    var link = document.createElement('a');
+    link.href = C.CREDIT.url;
+    link.textContent = C.CREDIT.name;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    $('credit').textContent = C.CREDIT.prefix + ' ';
+    $('credit').appendChild(link);
+  }
+
   function init() {
     syncPalette();
+    buildCredit();
     el.zoom.min = LIM.zoom.min;
     el.zoom.max = LIM.zoom.max;
     el.zoom.step = LIM.zoom.step;

@@ -57,6 +57,11 @@
   };
 
   /* ------------------------------------------------------------------ */
+  /* Crédit affiché en bas de page                                        */
+  /* ------------------------------------------------------------------ */
+  var CREDIT = { prefix: 'Built by', name: 'NJOH SIMPLICE JUNIOR', url: 'https://heysimplice.com' };
+
+  /* ------------------------------------------------------------------ */
   /* Limites et paramètres de la photo                                    */
   /* ------------------------------------------------------------------ */
   var LIMITS = {
@@ -279,8 +284,7 @@
       okRemoved: 'Photo retirée.',
       okDownload: 'Votre card est téléchargée.',
       okShare: 'Card partagée.',
-      shareText: 'Je serai au CITS26 !',
-      footer: 'Cameroon International Tech Summit · 15-17 octobre 2026 · Palais des Congrès, Yaoundé'
+      shareText: 'Je serai au CITS26 !'
     },
     en: {
       pageTitle: 'Participation card generator · CITS26',
@@ -332,8 +336,7 @@
       okRemoved: 'Photo removed.',
       okDownload: 'Your card has been downloaded.',
       okShare: 'Card shared.',
-      shareText: 'I’ll be at CITS26!',
-      footer: 'Cameroon International Tech Summit · October 15-17, 2026 · Palais des Congrès, Yaoundé'
+      shareText: 'I’ll be at CITS26!'
     }
   };
 
@@ -341,7 +344,7 @@
   var DEFAULTS = { uiLang: 'fr', lang: 'fr', type: 'participant', frame: 'yellow', format: 'post' };
 
   global.CITS = {
-    PALETTE: PALETTE, FONTS: FONTS, EVENT: EVENT, LIMITS: LIMITS, CARD_TEXT: CARD_TEXT,
+    PALETTE: PALETTE, FONTS: FONTS, EVENT: EVENT, CREDIT: CREDIT, LIMITS: LIMITS, CARD_TEXT: CARD_TEXT,
     CAPTIONS: CAPTIONS, TYPES: TYPES, FRAME_COLORS: FRAME_COLORS, STYLE: STYLE,
     LAYOUT: LAYOUT, FORMAT_ORDER: FORMAT_ORDER, UI: UI, DEFAULTS: DEFAULTS
   };
